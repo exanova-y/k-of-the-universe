@@ -17,7 +17,7 @@ function App() {
     }
     // Spread between 15% and 85% to keep away from edges
     const x = 15 + (Math.abs(hash) % 70); 
-    const y = 15 + (Math.abs(hash >> 16) % 60); // Keep away from bottom controls
+    const y = 10 + (Math.abs(hash >> 16) % 60); // Keep away from bottom controls
     return { left: `${x}%`, top: `${y}%` };
   };
 

@@ -129,9 +129,9 @@ export const entities: Entity[] = [
   {
     id: 'planet-earth',
     name: 'Planet Earth',
-    description: 'Total energy outputted by Earth. Input: 1.74e17 Watts.',
+    description: 'Total solar insolation intercepted by Earth.',
     spatialScale: '12,742 km',
-    powerWatts: 4.4e11, // 4.4 * 10^11 Watts
+    powerWatts: 1.74e17,
     category: 'cosmic',
     image: '🌍'
   },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react'; // useRef for when you want to store a mutable value that survives across renders but does not affect the UI rendering cycle.
 import './App.css';
 import { entities, type Entity } from './data/entities';
 import { calculateKardashev, calculateBitcoinStats, formatNumber } from './utils/transformer';
@@ -7,6 +7,7 @@ function App() {
   // Initial scale centered around human/biological scales (~100W = 2)
   const [scale, setScale] = useState<number>(2);
   const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
+  const lastWheelTime = useRef(0);
 
   // Helpers
   // Takes entity.id and hashes them into deterministic positions
@@ -27,15 +28,15 @@ function App() {
     setScale(parseFloat(e.target.value));
   };
 
+  
   const handleWheel = (e: React.WheelEvent) => {
     // Zoom sensitivity
-    
-    const maxDeltaY = 50;
-    const deltaY = Math.min(e.deltaY, maxDeltaY);
-    const computedDeltaY = deltaY * 0.01; 
-    console.log("event deltaY:", e.deltaY, "deltaY:", deltaY, "computedDeltaY:", computedDeltaY);
-    // variable for zoom velocity using max
+    console.log(e.deltaY);
+    const now = Date.now();
+    if (now - lastWheelTime.current < 16) return; // 16 ms ~= 60 fps.
+    lastWheelTime.current = now;
 
+    const computedDeltaY = e.deltaY * 0.01; 
     const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + computedDeltaY));
     setScale(newScale);
   };

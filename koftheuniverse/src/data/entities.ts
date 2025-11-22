@@ -139,7 +139,7 @@ export const entities: Entity[] = [
     id: 'solar-system',
     name: 'Solar System (Sun)',
     description: 'Total luminosity of the Sun.',
-    spatialScale: '1.4M km',
+    spatialScale: '4.5 billion km',
     powerWatts: 3.8e26,
     category: 'cosmic',
     image: '☀️'

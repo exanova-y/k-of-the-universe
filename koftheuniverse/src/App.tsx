@@ -167,7 +167,7 @@ function App() {
 
             <div className="stat-row">
               <span className="stat-label">Spatial scale</span>
-              <span className="stat-value" style={{color: '#fff'}}>{selectedEntity.spatialScale}</span>
+              <span className="stat-value secondary">{selectedEntity.spatialScale}</span>
             </div>
 
             <div className="stat-row">

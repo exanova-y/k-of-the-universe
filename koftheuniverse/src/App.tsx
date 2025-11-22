@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import './App.css';
 import { entities, type Entity } from './data/entities';
-import { calculateKardashev, wattsToJouleMin, calculateBitcoinStats, formatNumber } from './utils/transformer';
+import { calculateKardashev, calculateBitcoinStats, formatNumber } from './utils/transformer';
 
 function App() {
   // Initial scale centered around human/biological scales (~100W = 2)
   const [scale, setScale] = useState<number>(2);
   const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
 
-  // Helper to generate deterministic positions
+  // Helpers
+  // Takes entity.id and hashes them into deterministic positions
   const getPosition = (id: string) => {
     let hash = 0;
     for (let i = 0; i < id.length; i++) {
@@ -17,18 +18,25 @@ function App() {
     }
     // Spread between 15% and 85% to keep away from edges
     const x = 15 + (Math.abs(hash) % 70); 
-    const y = 10 + (Math.abs(hash >> 16) % 60); // Keep away from bottom controls
+    const y = 35 + (Math.abs(hash >> 16) % 60); // Keep away from bottom controls
     return { left: `${x}%`, top: `${y}%` };
   };
 
+  // Expects an event and sets scale to target value
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setScale(parseFloat(e.target.value));
   };
 
   const handleWheel = (e: React.WheelEvent) => {
     // Zoom sensitivity
-    const delta = e.deltaY * 0.005; 
-    const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + delta));
+    
+    const maxDeltaY = 50;
+    const deltaY = Math.min(e.deltaY, maxDeltaY);
+    const computedDeltaY = deltaY * 0.01; 
+    console.log("event deltaY:", e.deltaY, "deltaY:", deltaY, "computedDeltaY:", computedDeltaY);
+    // variable for zoom velocity using max
+
+    const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + computedDeltaY));
     setScale(newScale);
   };
 
@@ -124,12 +132,9 @@ function App() {
             </div>
 
             <div className="stat-row">
-              <span className="stat-label">Energy Output (Power)</span>
+              <span className="stat-label">Energy Output</span>
               <span className="stat-value highlight">
                 {formatNumber(selectedEntity.powerWatts)} W (J/s)
-              </span>
-              <span className="stat-value secondary">
-                ≈ {formatNumber(wattsToJouleMin(selectedEntity.powerWatts))} J/min
               </span>
             </div>
 

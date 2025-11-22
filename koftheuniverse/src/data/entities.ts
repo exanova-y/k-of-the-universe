@@ -12,7 +12,7 @@ export const entities: Entity[] = [
   {
     id: 'bacterium',
     name: 'Single Bacterium (E. coli)',
-    description: 'A single celled organism. Length ≈ 2 µm, diameter ≈ 1 µm.',
+    description: 'A single celled organism relying on diffusion. Length ≈ 2 µm, diameter ≈ 1 µm.',
     spatialScale: '2 µm',
     powerWatts: 6.67e-13, // 4e-11 J/min
     category: 'biological',
@@ -109,7 +109,7 @@ export const entities: Entity[] = [
     image: '⚛️'
   },
   {
-    id: 'fengman-hydro',
+    id: 'fengman-hydropower',
     name: 'Fengman Hydropower Station',
     description: 'Major NE China plant on the Songhua River. Installed capacity ≈ 1 GW.',
     spatialScale: '~1 km',

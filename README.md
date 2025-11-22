@@ -1,6 +1,9 @@
 
 Scale of the Universe, but this time... Kardashev.
-An interactive web-based explorer for visualizing the energy outputs on a scale focused on watts, ranging from single-celled organisms relying on diffusion to industrial objects like the Daqing oil field to standard k-scale metrics like solar systems.
+
+![](/koftheuniverse/src/assets/koftheuniverse.png)
+
+From single-celled organisms relying on diffusion to industrial objects e.g. the Daqing oil field, to standard k-scale metrics like solar systems.
 
 ## Getting Started
 

@@ -1,3 +1,19 @@
+import eColi from '../assets/e-coli.svg';
+import neuron from '../assets/neuron.svg';
+import slimeMoldStarved from '../assets/slime-mold.svg';
+import slimeMoldHealthy from '../assets/slime-mold.svg';
+import dolphin1 from '../assets/dolphin-singular.svg';
+import dolphin1st from '../assets/dolphin-1st.svg';
+import dolphin2nd from '../assets/dolphin-2nd.svg';
+import dolphin3rd from '../assets/dolphin-3rd.svg';
+import songCoal from '../assets/song-coal.svg';
+import tokamak from '../assets/tokamak.svg';
+import fengmanHydropower from '../assets/fengman.svg';
+import daqingOil from '../assets/daqing.svg';
+import earth from '../assets/earth.svg';
+import solarSystem from '../assets/sun.svg';
+import milkyWay from '../assets/milky-way.svg';
+
 export interface Entity {
   id: string;
   name: string;
@@ -16,7 +32,7 @@ export const entities: Entity[] = [
     spatialScale: '2 µm',
     powerWatts: 6.67e-13, // 4e-11 J/min
     category: 'biological',
-    image: '🦠'
+    image: eColi
   },
   {
     id: 'neuron',
@@ -25,7 +41,7 @@ export const entities: Entity[] = [
     spatialScale: '~100 µm arbor',
     powerWatts: 5.0e-10, // 3e-8 J/min
     category: 'biological',
-    image: '🧠'
+    image: neuron
   },
   {
     id: 'slime-starved',
@@ -34,7 +50,7 @@ export const entities: Entity[] = [
     spatialScale: '2-3 cm',
     powerWatts: 3.33e-4, // 2e-2 J/min
     category: 'biological',
-    image: '🦠'
+    image: slimeMoldStarved
   },
   {
     id: 'slime-healthy',
@@ -43,25 +59,25 @@ export const entities: Entity[] = [
     spatialScale: '2-3 cm',
     powerWatts: 1.0e-3, // 6e-2 J/min
     category: 'biological',
-    image: '🦠'
+    image: slimeMoldHealthy
   },
   {
-    id: 'dolphin-1',
+    id: 'dolphin-individual',
     name: 'Single Dolphin',
     description: 'Individual dolphin: length 2–4 m; mass ≈ 150–200 kg. Resting + moderate swimming metabolic rate.',
     spatialScale: '3 m',
     powerWatts: 433, // 2.6e4 J/min
     category: 'biological',
-    image: '🐬'
+    image: dolphin1
   },
   {
-    id: 'dolphin-3',
+    id: 'dolphin-1st',
     name: 'Dolphin Pod (1st Order)',
     description: 'Small social group of 3 dolphins.',
     spatialScale: '~10 m',
     powerWatts: 1300, // 7.8e4 J/min
     category: 'biological',
-    image: '🐬'
+    image: dolphin1st
   },
   {
     id: 'song-coal',
@@ -70,25 +86,25 @@ export const entities: Entity[] = [
     spatialScale: '2-3 m',
     powerWatts: 6700, // 6.7e3 J/s
     category: 'industrial',
-    image: '🔥'
+    image: songCoal
   },
   {
-    id: 'dolphin-10',
+    id: 'dolphin-2',
     name: 'Dolphin Society (2nd Order)',
     description: 'Larger group of 10 dolphins. Dolphin societies organize into nested hierarchies.',
     spatialScale: '~20 m',
     powerWatts: 4333, // 2.6e5 J/min
     category: 'biological',
-    image: '🐬'
+    image: dolphin2nd
   },
   {
-    id: 'dolphin-30',
+    id: 'dolphin-3rd',
     name: 'Dolphin Society (3rd Order)',
     description: 'Large group of 30 dolphins. Fission-fusion dynamics lead to fluid social structures.',
     spatialScale: '~50 m',
     powerWatts: 13000, // 7.8e5 J/min
     category: 'biological',
-    image: '🐬'
+    image: dolphin3rd
   },
   {
     id: 'iter-magnet',
@@ -97,7 +113,7 @@ export const entities: Entity[] = [
     spatialScale: '10 m',
     powerWatts: 6.67e7, // 4e9 J/min
     category: 'industrial',
-    image: '🧲'
+    image: tokamak
   },
   {
     id: 'iter-plasma',
@@ -106,7 +122,7 @@ export const entities: Entity[] = [
     spatialScale: '15-20 m',
     powerWatts: 5e8, // 500 MW
     category: 'industrial',
-    image: '⚛️'
+    image: tokamak
   },
   {
     id: 'fengman-hydropower',
@@ -115,16 +131,16 @@ export const entities: Entity[] = [
     spatialScale: '~1 km',
     powerWatts: 1e9, // 1 GW
     category: 'industrial',
-    image: '💧'
+    image: fengmanHydropower
   },
   {
-    id: 'daqing-oil',
+    id: 'daqing-oilfield',
     name: 'Daqing Oilfield',
     description: 'China’s largest oilfield. Peak production ≈ 40 Mt/year.',
     spatialScale: '>6 000 km²',
     powerWatts: 4.1e10, // ~1.3e18 J/yr
     category: 'industrial',
-    image: '🛢️'
+    image: daqingOil  
   },
   {
     id: 'planet-earth',
@@ -133,7 +149,7 @@ export const entities: Entity[] = [
     spatialScale: '12 742 km',
     powerWatts: 4.4e11, // 4.4 * 10^11 Watts
     category: 'cosmic',
-    image: '🌍'
+    image: earth
   },
   {
     id: 'solar-system',
@@ -142,7 +158,7 @@ export const entities: Entity[] = [
     spatialScale: '4.5 billion km',
     powerWatts: 3.8e26,
     category: 'cosmic',
-    image: '☀️'
+    image: solarSystem
   },
   {
     id: 'milky-way',
@@ -151,7 +167,7 @@ export const entities: Entity[] = [
     spatialScale: '100 000 ly',
     powerWatts: 1e37,
     category: 'cosmic',
-    image: '🌌'
+    image: milkyWay
   }
 ];
 

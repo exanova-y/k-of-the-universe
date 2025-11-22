@@ -25,7 +25,7 @@ function App() {
     }
     // Spread between 15% and 85% to keep away from edges
     const x = 15 + (Math.abs(hash) % 70); 
-    const y = 35 + (Math.abs(hash >> 16) % 60); // Keep away from bottom controls
+    const y = 30 + (Math.abs(hash >> 16) % 60); // Keep away from bottom controls
     return { left: `${x}%`, top: `${y}%` };
   };
 
@@ -78,6 +78,9 @@ function App() {
   const MIN_SCALE = -18;
   const MAX_SCALE = 40;
 
+  // Helper function to check if string is an image path
+  const isImage = (src?: string) => src?.includes('/') || src?.includes('.');
+
   return (
     <div 
       className="explorer-container" 
@@ -95,36 +98,22 @@ function App() {
           const entityPowerLog = Math.log10(entity.powerWatts);
           const diff = scale - entityPowerLog;
           
-          // Visual Scaling Logic:
-          // diff = 0 => exact match (scale 1)
-          // diff > 0 => user zoomed out (entity smaller)
-          // diff < 0 => user zoomed in (entity larger)
+          // ... (existing logic) ...
           
           // Scale factor:
-          // At diff=0, scale=1.
-          // At diff=1 (1 order of magnitude zoomed out), scale should decrease.
-          // Let's use a factor that keeps things visible for a range.
           const scaleFactor = Math.pow(10, -diff * 0.3);
           
-          // Visibility/Opacity Logic:
-          // Fade out if too small (diff is large positive)
-          // Fade out if too big (diff is large negative)
           let opacity = 1;
-          
-          // If entity is 10^6 times smaller than current view (diff > 6), fade out
           if (diff > 6) opacity = Math.max(0, 1 - (diff - 6) / 2);
-          
-          // If entity is 10^4 times larger than current view (diff < -4), fade out
           if (diff < -4) opacity = Math.max(0, 1 - (-diff - 4) / 2); 
 
           if (opacity <= 0) return null;
 
           const style = {
             ...getPosition(entity.id),
-            // Center the transform origin for accurate scaling
             transform: `translate(-50%, -50%) scale(${scaleFactor})`, 
             opacity,
-            zIndex: Math.floor(100 - diff) // Closer to current scale = higher z-index? Or just size based.
+            zIndex: Math.floor(100 - diff)
           };
           
           return (
@@ -138,10 +127,14 @@ function App() {
               }}
             >
               <div className="entity-icon" role="img" aria-label={entity.name}>
-                {entity.image}
+                {isImage(entity.image) ? (
+                  <img src={entity.image} alt={entity.name} className="entity-image" />
+                ) : (
+                  entity.image
+                )}
               </div>
               {/* Only show label if large enough to be readable */}
-              {scaleFactor > 0.2 && (
+              {scaleFactor > 1 && (
                 <div className="entity-label" style={{ fontSize: `${Math.min(1.5, 0.5/scaleFactor)}rem` }}>
                   {entity.name}
                 </div>

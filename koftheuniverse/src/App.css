@@ -80,10 +80,21 @@
   line-height: 1;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
   transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 1rem; Moves the icon lower */
+}
+
+.entity-image {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .entity-label {
-  margin-top: 0.5rem;
+  margin-top: -1rem; /* Pull label closer to image */
   font-size: 1rem;
   font-weight: 600;
   text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,0.5);

@@ -121,7 +121,7 @@ export const entities: Entity[] = [
     id: 'daqing-oil',
     name: 'Daqing Oilfield',
     description: 'China’s largest oilfield. Peak production ≈ 40 Mt/year.',
-    spatialScale: '>6000 km²',
+    spatialScale: '>6 000 km²',
     powerWatts: 4.1e10, // ~1.3e18 J/yr
     category: 'industrial',
     image: '🛢️'
@@ -130,7 +130,7 @@ export const entities: Entity[] = [
     id: 'planet-earth',
     name: 'Planet Earth',
     description: 'Total energy outputted by Earth. Input: 1.74e17 Watts.',
-    spatialScale: '12,742 km',
+    spatialScale: '12 742 km',
     powerWatts: 4.4e11, // 4.4 * 10^11 Watts
     category: 'cosmic',
     image: '🌍'
@@ -148,7 +148,7 @@ export const entities: Entity[] = [
     id: 'milky-way',
     name: 'Milky Way Galaxy',
     description: 'Estimated total luminosity of the Milky Way galaxy.',
-    spatialScale: '100,000 ly',
+    spatialScale: '100 000 ly',
     powerWatts: 1e37,
     category: 'cosmic',
     image: '🌌'

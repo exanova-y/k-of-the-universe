@@ -164,25 +164,21 @@ function App() {
           </div>
           
           <div className="info-stats">
-            <div className="stat-row">
-              <span className="stat-label">Description</span>
-              <div>{selectedEntity.description}</div>
-            </div>
 
             <div className="stat-row">
-              <span className="stat-label">Spatial Scale</span>
+              <span className="stat-label">Spatial scale</span>
               <span className="stat-value" style={{color: '#fff'}}>{selectedEntity.spatialScale}</span>
             </div>
 
             <div className="stat-row">
-              <span className="stat-label">Energy Output</span>
+              <span className="stat-label">Output</span>
               <span className="stat-value highlight">
-                {formatNumber(selectedEntity.powerWatts)} W (J/s)
+                {formatNumber(selectedEntity.powerWatts)} W
               </span>
             </div>
 
             <div className="stat-row">
-              <span className="stat-label">Kardashev Scale</span>
+              <span className="stat-label">Kardashev</span>
               <div>
                 <span className="kardashev-badge">
                   Type {calculateKardashev(selectedEntity.powerWatts).toFixed(3)}
@@ -191,7 +187,7 @@ function App() {
             </div>
 
             <div className="stat-row">
-              <span className="stat-label">Bitcoin Mining Equivalent</span>
+              <span className="stat-label">Bitcoin Mining</span>
               <div className="bitcoin-stat">
                 {calculateBitcoinStats(selectedEntity.powerWatts)}
               </div>
@@ -217,9 +213,6 @@ function App() {
             className="slider"
           />
           <span className="slider-label">Macro</span>
-        </div>
-        <div className="slider-hint">
-          (Scroll to zoom • Click objects for details)
         </div>
       </div>
     </div>

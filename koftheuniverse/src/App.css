@@ -5,7 +5,7 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(circle at center, #1a1a2e 0%, #050505 100%);
+  background: radial-gradient(circle at center, #14073e 0%, #050505 100%);
   color: #fff;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .subtitle strong {
-  color: #8b59f0;
+  color: #00dcbf;
 }
 
 .canvas {
@@ -125,7 +125,7 @@
   -webkit-appearance: none;
   appearance: none;
   height: 6px;
-  background: #9c63f2;
+  background: #5b04cd;
   border-radius: 3px;
   outline: none;
   cursor: pointer;
@@ -165,22 +165,28 @@
   color: #666;
 }
 
-/* Info Panel */
+  /* Info Panel - Glassmorphism */
 .info-panel {
   position: absolute;
   /* top/right removed to allow JS positioning */
-  width: 340px;
-  background: rgba(25, 25, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
+  width: 300px;
+  /* Glass effect background */
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px; /* Softer corners */
+  padding: 1.2rem;
   color: #fff;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  backdrop-filter: blur(16px);
-  z-index: 2000; /* High z-index to be above entities */
-  /* animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); */ /* Removed slideIn for draggable */
+  /* Stronger blur for the glass feel */
+  backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  z-index: 2000; /* High z-index to be layered above entities */
   cursor: grab;
   user-select: none; /* Prevent text selection while dragging */
+  transition: background 0.3s ease; /* Smooth transition on hover */
+  inset: 0 0 10px rgba(255,255,255,0.04);
+
 }
 
 .info-panel:active {
@@ -197,7 +203,8 @@
 }
 
 .info-title {
-  font-size: 1.4rem;
+  font-size: 1rem;
+  font-family: 'system-ui';
   margin: 0;
   line-height: 1.2;
   font-weight: 600;
@@ -244,7 +251,7 @@
 }
 
 .stat-value.highlight {
-  color: #4a90e2;
+  color: #450cd5;
   font-weight: bold;
 }
 
@@ -256,9 +263,9 @@
 .kardashev-badge {
   display: inline-block;
   padding: 0.3rem 0.6rem;
-  background: rgba(245, 166, 35, 0.15);
-  color: #f5a623;
-  border: 1px solid rgba(245, 166, 35, 0.3);
+  background: rgba(35, 245, 245, 0.15);
+  color: #23f5cf;
+  border: 1px solid rgba(35, 228, 245, 0.3);
   border-radius: 4px;
   font-weight: bold;
   font-family: 'Courier New', monospace;
@@ -266,9 +273,12 @@
 
 .bitcoin-stat {
   font-size: 0.9rem;
-  color: #aaa;
+  color: rgba(255, 255, 255, 0.9); /* High contrast for glass */
   font-style: italic;
   line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Ensure visibility on glass */
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 @keyframes slideIn {
@@ -286,6 +296,8 @@
     width: auto;
     max-height: 50vh;
     overflow-y: auto;
+    /* inset: 0 0 10px rgba(255,255,255,0.04) */
+
   }
   
   .app-header h1 {

@@ -19,17 +19,19 @@ export function calculateBitcoinStats(watts: number): string {
   const secondsPerBTC = joulesPerBTC / watts;
 
   if (secondsPerBTC < 60) {
+    console.log(secondsPerBTC, "seconds per BTC");
     const btcPerSecond = watts / joulesPerBTC;
     const btcPerDay = btcPerSecond * 86400;
-    return `Can mine ~${btcPerDay.toFixed(2)} Bitcoins per day`;
+    console.log(btcPerDay, "btc per day");
+    return `~${formatNumber(btcPerDay)} BTC/day`;
   } else {
     // Convert seconds to human readable
     const minutes = secondsPerBTC / 60;
-    if (minutes < 60) return `Takes ~${minutes.toFixed(1)} minutes to mine 1 Bitcoin`;
+    if (minutes < 60) return `~${minutes.toFixed(1)} minutes to mine 1 Bitcoin`;
     const hours = minutes / 60;
-    if (hours < 24) return `Takes ~${hours.toFixed(1)} hours to mine 1 Bitcoin`;
+    if (hours < 24) return `~${hours.toFixed(1)} hours to mine 1 Bitcoin`;
     const days = hours / 24;
-    if (days < 365) return `Takes ~${days.toFixed(1)} days to mine 1 Bitcoin`;
+    if (days < 365) return `~${days.toFixed(1)} days to mine 1 Bitcoin`;
     const years = days / 365;
     if (years > 1e9) return `Takes > 1 billion years to mine 1 Bitcoin`;
     return `Takes ~${years.toLocaleString(undefined, {maximumFractionDigits: 1})} years to mine 1 Bitcoin`;

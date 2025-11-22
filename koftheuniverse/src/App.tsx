@@ -4,10 +4,16 @@ import { entities, type Entity } from './data/entities';
 import { calculateKardashev, calculateBitcoinStats, formatNumber } from './utils/transformer';
 
 function App() {
+  // Draggable Panel State
+  const [panelPos, setPanelPos] = useState({ x: window.innerWidth - 380, y: 80 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragOffset = useRef({ x: 0, y: 0 });
+
   // Initial scale centered around human/biological scales (~100W = 2)
-  const [scale, setScale] = useState<number>(2);
+  const [scale, setScale] = useState<number>(10);
   const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
   const lastWheelTime = useRef(0);
+  const fps = 60;
 
   // Helpers
   // Takes entity.id and hashes them into deterministic positions
@@ -23,6 +29,33 @@ function App() {
     return { left: `${x}%`, top: `${y}%` };
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Only start drag if clicking the header or the panel itself, not buttons
+    if ((e.target as HTMLElement).tagName === 'BUTTON') return;
+    
+    setIsDragging(true);
+    dragOffset.current = {
+      x: e.clientX - panelPos.x,
+      y: e.clientY - panelPos.y
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    
+    // Prevent selecting text while dragging
+    e.preventDefault();
+
+    setPanelPos({
+      x: e.clientX - dragOffset.current.x,
+      y: e.clientY - dragOffset.current.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   // Expects an event and sets scale to target value
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setScale(parseFloat(e.target.value));
@@ -33,9 +66,8 @@ function App() {
     // Zoom sensitivity
     console.log(e.deltaY);
     const now = Date.now();
-    if (now - lastWheelTime.current < 16) return; // 16 ms ~= 60 fps.
+    if (now - lastWheelTime.current < 1000 / fps) return; // limit rendering to every 16 ms at least ~= 60 fps.
     lastWheelTime.current = now;
-
     const computedDeltaY = e.deltaY * 0.01; 
     const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + computedDeltaY));
     setScale(newScale);
@@ -43,14 +75,19 @@ function App() {
 
   // Range of the slider (Log10 Watts)
   // -13 (Bacteria) to 38 (Galaxy)
-  const MIN_SCALE = -14;
+  const MIN_SCALE = -18;
   const MAX_SCALE = 40;
 
   return (
-    <div className="explorer-container" onWheel={handleWheel}>
+    <div 
+      className="explorer-container" 
+      onWheel={handleWheel}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
       <div className="app-header">
-        <h1>Kardashev Scale Explorer</h1>
-        <p className="subtitle">Base Unit: <strong>Joules per Second (Watts)</strong></p>
+        <h1>Kardashev Scale of the Universe</h1>
       </div>
 
       <div className="canvas">
@@ -115,7 +152,12 @@ function App() {
       </div>
 
       {selectedEntity && (
-        <div className="info-panel" onClick={(e) => e.stopPropagation()}>
+        <div 
+          className="info-panel" 
+          style={{ left: panelPos.x, top: panelPos.y }}
+          onMouseDown={handleMouseDown}
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="info-header">
             <h2 className="info-title">{selectedEntity.name}</h2>
             <button className="close-btn" onClick={() => setSelectedEntity(null)}>×</button>
@@ -158,9 +200,10 @@ function App() {
         </div>
       )}
 
+      {/* Sliders */}
       <div className="controls" onClick={(e) => e.stopPropagation()}>
         <div className="scale-readout">
-          View Scale: 10<sup>{scale.toFixed(1)}</sup> Joules/second
+          10<sup>{scale.toFixed(1)}</sup> Joules/second (Watts)
         </div>
         <div className="slider-container">
           <span className="slider-label">Micro</span>

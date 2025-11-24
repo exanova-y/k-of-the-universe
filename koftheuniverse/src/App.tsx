@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'; // useRef for when you want to store a mutable value that survives across renders but does not affect the UI rendering cycle.
+import React, { useState, useRef, useEffect } from 'react'; // useRef for when you want to store a mutable value that survives across renders but does not affect the UI rendering cycle.
 import './App.css';
 import { entities, type Entity } from './data/entities';
 import { calculateKardashev, calculateBitcoinStats, formatNumber } from './utils/transformer';
@@ -23,6 +23,11 @@ function App() {
   const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
   const lastWheelTime = useRef(0);
   const fps = 60;
+
+  // Debug: Log showCollage changes
+  useEffect(() => {
+    console.log('showCollage changed to:', showCollage);
+  }, [showCollage]);
 
   // Helpers
   // Takes entity.id and hashes them into deterministic positions
@@ -108,6 +113,7 @@ function App() {
         <h1>Kardashev Scale of the Universe</h1>
       </div>
 
+    {/* zooming entities */}
       <div className="canvas">
         {entities.map((entity) => {
           const entityPowerLog = Math.log10(entity.powerWatts);
@@ -159,6 +165,8 @@ function App() {
         })}
       </div>
 
+      {/* Info Panel */}
+      {/* conditional rendering based on if selectedEntity is true */}
       {selectedEntity && (
         <div 
           className="info-panel" 
@@ -229,6 +237,8 @@ function App() {
         </div>
       </div>
 
+      {/* Easter egg collage popup */}
+      {/* conditional rendering based on if ShowCollage is true */}
       {showCollage && (
           <div 
             className="popup-content" 
@@ -238,8 +248,26 @@ function App() {
               top: positions['collage'].y,
             }}
             onMouseDown={(e) => handleDragStart(e, 'collage', positions['collage'])}
-          >
-            <button className="close-popup" onClick={() => setShowCollage(false)}>×</button>
+            onClick={(e) => {
+              console.log('Container onClick fired, target:', e.target);
+              e.stopPropagation();
+            }}>
+          
+            <button 
+              className="close-popup" 
+              onMouseDown={(e) => {
+                console.log('Close button onMouseDown fired');
+                e.stopPropagation();
+              }}
+              onClick={(e) => {
+                console.log('Close button onClick fired, current showCollage:', showCollage);
+                e.stopPropagation();
+                setShowCollage(false);
+                console.log('setShowCollage(false) called');
+              }}
+            >
+              ×
+            </button>
             <img src={collageImg} alt="Kardashev Collage" className="popup-image" draggable={false} />
             <p className="stat-label">from Yoyo</p> 
           </div> /* text goes to bottom of image */

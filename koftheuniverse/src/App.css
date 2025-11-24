@@ -185,7 +185,7 @@
   /* top/right removed to allow JS positioning */
   width: 300px;
   /* Glass effect background */
-  background: rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px; 
   padding: 1.2rem;
@@ -230,7 +230,7 @@
   position: relative;
   top: -6px;
   color: #ffffffa6;
-  text-shadow: 0 0 10px #fff;
+  /* text-shadow: 0 0 10px #fff; */
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
@@ -323,19 +323,21 @@
 .popup-content {
   position: relative;
 
-  border-radius: 1px;
+  border-radius: 5px;
   /* Neon edges */
   box-shadow: 
     0 0 1px #fff,
     0 0 5px #0ff; 
-  width: 43vw;
+  width: fit-content;
+  height: fit-content;
   max-width: none;
   max-height: none;
 
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   /* Stronger blur for the glass feel */
-  backdrop-filter: blur(20px); 
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(6px); 
+  -webkit-backdrop-filter: blur(6px);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   cursor: grab;
 
@@ -347,9 +349,10 @@
 }
 
 .popup-image {
-  max-width: none; /* since we already set the max height and not scale down if the container shrinks in  */
-  height: 40vh; /* hard code the value */
-  max-height: 80vh;
+  width: auto;
+  height: auto;
+  max-width: 800px; /* Absolute pixel value instead of viewport */
+  max-height: 600px; /* Absolute pixel value instead of viewport */
   object-fit: contain;
   display: block;
   z-index: 5000;
@@ -366,10 +369,10 @@
   right: 5px;
   background: none;
   border: none;
-  color: #fff;
+  color: #ffffffa6;
   font-size: 1.5rem;
   cursor: pointer;
-  text-shadow: 0 0 10px #fff;
+  /* text-shadow: 0 0 10px #fff; */
 }
 
 @keyframes fadeIn {

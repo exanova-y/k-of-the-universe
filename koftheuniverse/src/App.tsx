@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'; // useRef for when you want to store a mutable value that survives across renders but does not affect the UI rendering cycle.
+import React, { useState, useRef, useEffect, useMemo } from 'react'; // useRef for when you want to store a mutable value that survives across renders but does not affect the UI rendering cycle.
 import './App.css';
 import { entities, type Entity } from './data/entities';
 import { calculateKardashev, calculateBitcoinStats, formatNumber } from './utils/transformer';
@@ -101,6 +101,17 @@ function App() {
   // Helper function to check if string is an image path
   const isImage = (src?: string) => src?.includes('/') || src?.includes('.');
 
+  // Generate 600 stars with random positions and sizes
+  const stars = useMemo(() => {
+    return Array.from({ length: 600 }, (_, i) => ({
+      id: `star-${i}`,
+      left: Math.random() * 100, // Percentage of viewport width
+      top: Math.random() * 100, // Percentage of viewport height
+      size: Math.random() * 2 + 0.5, // Size between 0.5px and 2.5px
+      opacity: Math.random() * 0.8 + 0.2, // Opacity between 0.2 and 1.0
+    }));
+  }, []); // Empty dependency array - generate once on mount
+
   return (
     <div 
       className="explorer-container" 
@@ -115,6 +126,21 @@ function App() {
 
     {/* zooming entities */}
       <div className="canvas">
+        {/* Starfield background */}
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="star"
+            style={{
+              position: 'absolute',
+              left: `${star.left}%`,
+              top: `${star.top}%`,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              opacity: star.opacity,
+            }}
+          />
+        ))}
         {entities.map((entity) => {
           const entityPowerLog = Math.log10(entity.powerWatts);
           const diff = scale - entityPowerLog;

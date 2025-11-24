@@ -52,6 +52,15 @@
   /* subtle grid or stars could be added here */
 }
 
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
 .entity {
   position: absolute;
   display: flex;

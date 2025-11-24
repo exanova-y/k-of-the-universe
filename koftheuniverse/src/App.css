@@ -153,7 +153,7 @@
   background: hsla(0, 0%, 100%, 0.5);
   border-radius: 20%;
   cursor: grab;
-  box-shadow: 0 0 10pxrgb(0, 0, 0)
+  box-shadow: 0 0 10px rgb(0, 0, 0);
   transition: transform 0.1s;
 }
 
@@ -195,7 +195,7 @@
   -webkit-backdrop-filter: blur(5px);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   
-  z-index: 2000; /* High z-index to be layered above entities */
+  z-index: 2000; /* very high lol */
   cursor: grab;
   user-select: none; /* Prevent text selection while dragging */
   transition: background 0.3s ease; /* Smooth transition on hover */
@@ -227,11 +227,13 @@
 .close-btn {
   background: none;
   border: none;
+  position: relative;
+  top: -6px;
   color: #ffffffa6;
+  text-shadow: 0 0 10px #fff;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
-  line-height: 1;
   transition: color 0.2s;
 }
 
@@ -301,6 +303,78 @@
 @keyframes slideIn {
   from { transform: translateX(30px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
+}
+
+.footer p {
+  margin: 0;
+  cursor: pointer;
+  color: #666;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.footer p:hover {
+  color: #fff;
+}
+
+/* Popup Styles */
+
+
+.popup-content {
+  position: relative;
+
+  border-radius: 1px;
+  /* Neon edges */
+  box-shadow: 
+    0 0 1px #fff,
+    0 0 5px #0ff; 
+  width: 43vw;
+  max-width: none;
+  max-height: none;
+
+  background: rgba(255, 255, 255, 0.2);
+  /* Stronger blur for the glass feel */
+  backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  cursor: grab;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 5000;
+}
+
+.popup-image {
+  max-width: none; /* since we already set the max height and not scale down if the container shrinks in  */
+  height: 40vh; /* hard code the value */
+  max-height: 80vh;
+  object-fit: contain;
+  display: block;
+  z-index: 5000;
+}
+
+.popup-content .stat-label {
+  margin-top: 0rem;
+  padding-bottom: 0.5rem;
+}
+
+.close-popup {
+  position: absolute;
+  top: 6px;
+  right: 5px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-shadow: 0 0 10px #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Mobile Responsive */

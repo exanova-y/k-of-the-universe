@@ -39,7 +39,7 @@ export const entities: Entity[] = [
     name: 'Single Neuron',
     description: 'Soma ≈ 20 µm diameter, dendrites spread over a few hundred µm. Total arbor length can reach centimeters.',
     spatialScale: '~100 µm arbor',
-    powerWatts: 5.0e-10, // 3e-8 J/min
+    powerWatts: 5.0e-10, 
     category: 'biological',
     image: neuron
   },
@@ -48,7 +48,7 @@ export const entities: Entity[] = [
     name: 'Slime Mold (Starved)',
     description: 'A 1g plasmodium in a quiescent state. Radius ≈ 2–3 cm.',
     spatialScale: '2-3 cm',
-    powerWatts: 3.33e-4, // 2e-2 J/min
+    powerWatts: 3.33e-4,
     category: 'biological',
     image: slimeMoldStarved
   },
@@ -57,7 +57,7 @@ export const entities: Entity[] = [
     name: 'Slime Mold (Healthy)',
     description: 'A 1g plasmodium actively foraging. Radius ≈ 2–3 cm.',
     spatialScale: '2-3 cm',
-    powerWatts: 1.0e-3, // 6e-2 J/min
+    powerWatts: 1.0e-3, 
     category: 'biological',
     image: slimeMoldHealthy
   },
@@ -66,16 +66,16 @@ export const entities: Entity[] = [
     name: 'Single Dolphin',
     description: 'Individual dolphin: length 2–4 m; mass ≈ 150–200 kg. Resting + moderate swimming metabolic rate.',
     spatialScale: '3 m',
-    powerWatts: 433, // 2.6e4 J/min
+    powerWatts: 433, 
     category: 'biological',
     image: dolphin1
   },
   {
     id: 'dolphin-1st',
     name: 'Dolphin Pod (1st Order)',
-    description: 'Small social group of 3 dolphins.',
-    spatialScale: '~10 m',
-    powerWatts: 1300, // 7.8e4 J/min
+    description: 'Small duo of 2 dolphins.',
+    spatialScale: '~5 m',
+    powerWatts: 866, 
     category: 'biological',
     image: dolphin1st
   },
@@ -106,15 +106,15 @@ export const entities: Entity[] = [
     category: 'biological',
     image: dolphin3rd
   },
-  {
-    id: 'iter-magnet',
-    name: 'ITER Toroidal Magnet',
-    description: 'Energy stored in the toroidal field system over 10 mins.',
-    spatialScale: '10 m',
-    powerWatts: 6.67e7, // 4e9 J/min
-    category: 'industrial',
-    image: tokamak
-  },
+  // {
+  //   id: 'iter-magnet',
+  //   name: 'ITER Toroidal Magnet',
+  //   description: 'Energy stored in the toroidal field system over 10 mins.',
+  //   spatialScale: '10 m',
+  //   powerWatts: 6.67e7, // 4e9 J/min
+  //   category: 'industrial',
+  //   image: tokamak
+  // },
   {
     id: 'iter-plasma',
     name: 'ITER Tokamak Plasma',

@@ -3,14 +3,23 @@ import './App.css';
 import { entities, type Entity } from './data/entities';
 import { calculateKardashev, calculateBitcoinStats, formatNumber } from './utils/transformer';
 
+import collageImg from './assets/collage.png';
+
 function App() {
   // Draggable Panel State
-  const [panelPos, setPanelPos] = useState({ x: window.innerWidth - 380, y: 80 });
-  const [isDragging, setIsDragging] = useState(false);
+  const [positions, setPositions] = useState({
+    'info-panel': { x: window.innerWidth - 380, y: 80 },
+    'collage': { x: window.innerWidth / 2, y: window.innerHeight / 2 } // Initial center logic is handled by CSS usually, but for dragging we need absolute
+  });
+  
+  const [activeDrag, setActiveDrag] = useState<string | null>(null);
   const dragOffset = useRef({ x: 0, y: 0 });
 
+  // Collage Popup State
+  const [showCollage, setShowCollage] = useState(false);
+
   // Initial scale centered around human/biological scales (~100W = 2)
-  const [scale, setScale] = useState<number>(10);
+  const [scale, setScale] = useState<number>(6.3);
   const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
   const lastWheelTime = useRef(0);
   const fps = 60;
@@ -29,32 +38,38 @@ function App() {
     return { left: `${x}%`, top: `${y}%` };
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    // Only start drag if clicking the header or the panel itself, not buttons
+  const handleDragStart = (e: React.MouseEvent, id: string, currentPos: { x: number, y: number }) => {
+    // Only start drag if clicking the header or the panel itself, not buttons (simple check)
     if ((e.target as HTMLElement).tagName === 'BUTTON') return;
-    
-    setIsDragging(true);
+
+    e.preventDefault(); // Prevent native image dragging and text selection
+
+    setActiveDrag(id);
     dragOffset.current = {
-      x: e.clientX - panelPos.x,
-      y: e.clientY - panelPos.y
+      x: e.clientX - currentPos.x,
+      y: e.clientY - currentPos.y
     };
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
+  const handleDragMove = (e: React.MouseEvent) => {
+    if (!activeDrag) return;
     
-    // Prevent selecting text while dragging
     e.preventDefault();
-
-    setPanelPos({
-      x: e.clientX - dragOffset.current.x,
-      y: e.clientY - dragOffset.current.y
-    });
+    
+    setPositions(prev => ({
+      ...prev,
+      [activeDrag]: {
+        x: e.clientX - dragOffset.current.x,
+        y: e.clientY - dragOffset.current.y
+      }
+    }));
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
+  const handleDragEnd = () => {
+    setActiveDrag(null);
   };
+
+
 
   // Expects an event and sets scale to target value
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,9 +100,9 @@ function App() {
     <div 
       className="explorer-container" 
       onWheel={handleWheel}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      onMouseMove={handleDragMove}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
     >
       <div className="app-header">
         <h1>Kardashev Scale of the Universe</h1>
@@ -147,8 +162,8 @@ function App() {
       {selectedEntity && (
         <div 
           className="info-panel" 
-          style={{ left: panelPos.x, top: panelPos.y }}
-          onMouseDown={handleMouseDown}
+          style={{ left: positions['info-panel'].x, top: positions['info-panel'].y }}
+          onMouseDown={(e) => handleDragStart(e, 'info-panel', positions['info-panel'])}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="info-header">
@@ -206,8 +221,30 @@ function App() {
             className="slider"
           />
           <span className="slider-label">Macro</span>
+
+          <div className="footer" onClick={() => setShowCollage(true)}>
+            <p>?</p>
+          </div>
+          
         </div>
       </div>
+
+      {showCollage && (
+          <div 
+            className="popup-content" 
+            style={{ 
+              position: 'absolute', /* Ensure it obeys left/top */
+              left: positions['collage'].x, 
+              top: positions['collage'].y,
+            }}
+            onMouseDown={(e) => handleDragStart(e, 'collage', positions['collage'])}
+          >
+            <button className="close-popup" onClick={() => setShowCollage(false)}>×</button>
+            <img src={collageImg} alt="Kardashev Collage" className="popup-image" draggable={false} />
+            <p className="stat-label">from Yoyo</p> 
+          </div> /* text goes to bottom of image */
+      )}
+
     </div>
   );
 }
